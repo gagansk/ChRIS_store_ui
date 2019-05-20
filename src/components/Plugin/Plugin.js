@@ -22,6 +22,7 @@ class Plugin extends Component {
     this.state = { pluginData };
 
     this.fetchPluginData = this.fetchPluginData.bind(this);
+    this.fetchPluginParameters = this.fetchPluginParameters.bind(this);
   }
 
   componentWillMount() {
@@ -35,10 +36,33 @@ class Plugin extends Component {
           console.error(err);
         });
     }
+    this.fetchPluginParameters();
   }
 
   componentWillUnmount() {
     this.mounted = false;
+  }
+
+  fetchPluginParameters() {
+    const storeURL = process.env.REACT_APP_STORE_URL;
+    const { plugin: pluginId } = this.props.match.params;
+    const client = new StoreClient(storeURL);
+
+    let pluginParameters;
+    return new Promise(async (resolve, reject) => {
+      try {
+        const plugin = await client.getPluginParameters(pluginId);
+        pluginParameters = plugin.data;
+        console.log(pluginParameters);
+      } catch (e) {
+        return reject(e);
+      }
+
+      if (this.mounted) {
+        this.setState({ pluginParameters });
+      }
+      return resolve(pluginParameters);
+    });
   }
 
   fetchPluginData() {
@@ -83,6 +107,7 @@ class Plugin extends Component {
       data = pluginData || {};
     }
 
+    console.log(data);
     // conditional rendering
     let container;
     if (Object.keys(data).length > 0) {
