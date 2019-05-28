@@ -3,6 +3,15 @@ import PropTypes from 'prop-types';
 import { Card, CardHeading, CardTitle, CardBody } from 'patternfly-react';
 import './PluginBody.css';
 
+const parameter= { "action": "store",
+                    "default": "",
+                    "flag": "--pfdcm",
+                    "help": "The PACS Q/R intermediary service IP:port.",
+                    "id": 49,
+                    "name": "str_pfdcm",
+                    "optional": true,
+                    "type": "string" };
+
 const PluginBody = ({ pluginData }) => (
   <div className="plugin-body">
     <div className="row">
@@ -18,6 +27,12 @@ const PluginBody = ({ pluginData }) => (
             <CardTitle>Description</CardTitle>
           </CardHeading>
           <CardBody>{pluginData.description}</CardBody>
+        </Card>
+        <Card className="plugin-body-description">
+          <CardHeading>
+            <CardTitle>Parameters</CardTitle>
+          </CardHeading>
+          <CardBody>{parameter.name}</CardBody>
         </Card>
       </div>
       <div className="plugin-body-side-col">
@@ -44,4 +59,3 @@ PluginBody.propTypes = {
 };
 
 export default PluginBody;
-

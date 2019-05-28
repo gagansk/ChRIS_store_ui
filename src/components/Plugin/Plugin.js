@@ -107,7 +107,6 @@ class Plugin extends Component {
       data = pluginData || {};
     }
 
-    console.log(data);
     // conditional rendering
     let container;
     if (Object.keys(data).length > 0) {
